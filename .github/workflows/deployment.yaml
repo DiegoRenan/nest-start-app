@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  AWS_REGION: us-east-2
+  ECR_REPOSITORY: helloworldrepository
+
 jobs:
   deploy:
     name: Deploy
@@ -20,8 +24,21 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+          aws-region: $AWS_REGION
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTERY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
