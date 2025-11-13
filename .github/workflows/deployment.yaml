@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-2
   ECR_REPOSITORY: helloworldrepository
-  ECS_TASK_DEFINITION: helloworldtask
+  ECS_TASK_DEFINITION: helloworldtask:5
   CONTAINER_NAME: helloworldcontainer
 
 jobs:
