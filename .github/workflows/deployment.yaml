@@ -10,6 +10,8 @@ env:
   ECR_REPOSITORY: helloworldrepository
   ECS_TASK_DEFINITION: .github/workflows/task-definition.json
   CONTAINER_NAME: helloworldcontainer
+  ECS_SERVICE: helloworldservice
+  ECS_CLUSTER: Helloworldcluster
 
 jobs:
   deploy:
@@ -54,7 +56,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-dfinition@v2
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
