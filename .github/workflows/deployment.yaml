@@ -14,7 +14,7 @@ env:
   ECR_REPOSITORY: helloworldrepository
   CONTAINER_NAME: helloworldcontainer
   ECS_SERVICE: helloworldservice
-  ECS_CLUSTER: Helloworldcluster
+  ECS_CLUSTER: helloworldcluster
 
 jobs:
   deploy:
