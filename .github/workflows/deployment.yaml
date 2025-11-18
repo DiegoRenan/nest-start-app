@@ -55,11 +55,13 @@ jobs:
 
       - name: Update task-definition.json
         run: echo "`jq '.containerDefinitinos[0].image="${{ steps.build-image.outputs.image }}"' task-definition.json`" > task-definition.json
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json 
+          task-definition: task-definition.json
+          task-definition-revision: 22
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
