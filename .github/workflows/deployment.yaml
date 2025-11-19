@@ -70,4 +70,7 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
-          run-task: true
+
+      - name: Force redeploy
+        run: aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --region ${{ env.AWS_REGION }} --force-new-deployment
+
